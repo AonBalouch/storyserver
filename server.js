@@ -10,7 +10,7 @@ import ip from 'ip';
 
 // PUT YOUR ALLOWED DOMAINS THE ACCESS THIS SERVER HERE:
 
-const allowedOrigins = ['https://kidsstory.vercel.app/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
+const allowedOrigins = ['http://bbfwriter.com/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
 
 const filter = new Filter()
 
@@ -118,12 +118,13 @@ app.post('/davinci', async (req, res) => {
  * POST /dalle
  * Returns a response from OpenAI's image generation model.
  */
+
 app.post('/dalle', async (req, res) => {
-  const { prompt, user } = req.body
+  const { prompt, user, story_setting, story_theme } = req.body
 
   try {
     const response = await openai.createImage({
-      prompt: `${prompt}`,
+      prompt: `${prompt} , ${story_theme} , ${story_setting} children storybook style `,
       user: user,
       n: 3,
       size: "256x256",
