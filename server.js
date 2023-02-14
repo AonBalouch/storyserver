@@ -10,7 +10,7 @@ import ip from 'ip';
 
 // PUT YOUR ALLOWED DOMAINS THE ACCESS THIS SERVER HERE:
 
-const allowedOrigins = ['http://bbfwriter.com/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
+const allowedOrigins = ['https://kidsstory.vercel.app/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
 
 const filter = new Filter()
 
