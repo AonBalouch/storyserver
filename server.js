@@ -10,7 +10,7 @@ import ip from 'ip';
 
 // PUT YOUR ALLOWED DOMAINS THE ACCESS THIS SERVER HERE:
 
-const allowedOrigins = ['http://bbfwriter.com/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
+const allowedOrigins = ['https://kidsstory.vercel.app/', 'https://gptclone-ten.vercel.app/' ,'https://chatgptclient.vercel.app', 'http://localhost',"http://127.0.0.1:8080/"]
 
 const filter = new Filter()
 
@@ -60,6 +60,9 @@ app.get('/', (req, res) => {
  */
 app.post('/davinci', async (req, res) => {
   // Validate request body
+  // const prompt = req.body.prompt
+  const story_theme = req.body.story_theme
+  const story_setting = req.body.story_setting
   if (!req.body.prompt) {
     return res.status(400).send({
       error: 'Missing required field "prompt" in request body',
@@ -68,19 +71,27 @@ app.post('/davinci', async (req, res) => {
 
   try {
     // Call OpenAI API
-    const { prompt, user } = req.body
+    const { prompt, user, story_setting, story_theme } = req.body
     const cleanPrompt = filter.isProfane(prompt) ? filter.clean(prompt) : prompt
     console.log(cleanPrompt)
-
+    console.log(story_theme)
+    console.log(story_setting)
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-     prompt: `
-      Q: Write a detailed 500 words Story about protagonist character ${cleanPrompt}
-       as if it was written for 5 year kid. With plot like The Lion King, Little Women, Toy Story or up with
-       chatacters of antagonist,supporting,dynamic.
+      prompt: `
+      Q: Write a story with a title for the story.
+       Make the story appropriate for a 6 year old.
+        Make it 300 words. The story will have 4 characters.
+         ${cleanPrompt} is 1 of the characters the story. ${cleanPrompt} 
+         is a lead character in the stories plot. ${cleanPrompt} is a good
+          and positive character in the story.
+          The setting for the story will be ${story_setting}. The theme of the story will be ${story_theme}. 
+          Describe a range of emotions through out the story which the characters are feeling. 
+          Describe the surroundings and setting of each section of the
+      story in detail.
        A: `,
       user: user,
-      temperature: 0.5,
+      temperature: 0.8,
       max_tokens: 500,
       top_p: 0.5,
       frequency_penalty: 0.5,
@@ -114,7 +125,7 @@ app.post('/dalle', async (req, res) => {
     const response = await openai.createImage({
       prompt: `${prompt}`,
       user: user,
-      n: 1,
+      n: 3,
       size: "256x256",
     })
 
