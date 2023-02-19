@@ -119,22 +119,49 @@ app.post('/davinci', async (req, res) => {
  * Returns a response from OpenAI's image generation model.
  */
 
+// app.post('/dalle', async (req, res) => {
+//   const { prompt, user, story_setting, story_theme } = req.body
+
+//   try {
+//     console.log (prompt)
+//     const response = await openai.createImage({
+//       prompt: `${prompt} , children storybook style `,
+//       user: user,
+//       n: 3,
+//       size: "512x512",
+//     })
+
+//     console.log(response.data.data[0].url)
+//     res.status(200).send({
+//       bot: response.data.data[0].url,
+//       // limit: res.body.limit
+//     })
+//   } catch (error) {
+//     // Log error and return a generic error message
+//     console.error(error)
+//     res.status(500).send({
+//       error: 'Something went wrong',
+//     })
+//   }
+// })
+
+
 app.post('/dalle', async (req, res) => {
   const { prompt, user, story_setting, story_theme } = req.body
 
   try {
     console.log (prompt)
     const response = await openai.createImage({
-      prompt: `${prompt} , children storybook style `,
+      prompt: `${prompt} , children art storybook style `,
+      n: 3, // generate 3 images
+      size: "256x256",
       user: user,
-      n: 3,
-      size: "512x512",
     })
 
-    console.log(response.data.data[0].url)
+    const imageUrls = response.data.data.map((image) => image.url)
+    console.log(imageUrls)
     res.status(200).send({
-      bot: response.data.data[0].url,
-      // limit: res.body.limit
+      bot: imageUrls,
     })
   } catch (error) {
     // Log error and return a generic error message
