@@ -123,11 +123,12 @@ app.post('/dalle', async (req, res) => {
   const { prompt, user, story_setting, story_theme } = req.body
 
   try {
+    console.log (prompt)
     const response = await openai.createImage({
-      prompt: `${prompt} , ${story_theme} , ${story_setting} children storybook style `,
+      prompt: `${prompt} , children storybook style `,
       user: user,
       n: 3,
-      size: "256x256",
+      size: "512x512",
     })
 
     console.log(response.data.data[0].url)
